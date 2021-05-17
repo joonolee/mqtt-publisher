@@ -84,9 +84,9 @@ class MqttManager {
     _client.disconnect();
   }
 
-  void publish(String message) {
+  Future<void> publish(String message) async {
     Fluttertoast.showToast(msg: '메시지 전송 : $message');
-    _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())} $message\n');
+    await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())} $message\n');
     final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
     builder.addString(message);
     _client.publishMessage(_topic, MqttQos.exactlyOnce, builder.payload);

@@ -41,11 +41,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() async {
+  void _incrementCounter() async {
+    setState(() {
       _counter++;
-      mqttManager.publish('count = $_counter');
     });
+    await mqttManager.publish('count = $_counter');
   }
 
   @override
