@@ -31,7 +31,7 @@ class MqttManager {
 
   Future<void> get _localFile async {
     final path = await _localPath;
-    file = File('$path/${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}.txt');
+    file = File('$path/${DateFormat('yyyyMMdd').format(DateTime.now())}.txt');
   }
 
   Future<void> _writeDataToFile(String data) async {
@@ -44,7 +44,7 @@ class MqttManager {
         _host = host,
         _topic = topic;
 
-  void initializeMQTTClient() async {
+  Future<void> initializeMQTTClient() async {
     await _localFile; // 파일 생성
     _client = MqttServerClient(_host, _identifier);
     _client.port = 1883;
@@ -116,7 +116,7 @@ class MqttManager {
       print('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       print('');
       LocalNotification.show(title: 'MQTT 메시지 수신', body: pt);
-      await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())} $pt\n');
+      await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}\t$pt\n');
     });
     print('EXAMPLE::OnConnected client callback - Client connection was sucessful');
   }
