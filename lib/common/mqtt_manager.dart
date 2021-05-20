@@ -87,7 +87,7 @@ class MqttManager {
 
   Future<void> publish(String message) async {
     Fluttertoast.showToast(msg: '메시지 전송 : $message');
-    await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())} $message\n');
+    await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}---> $message\n');
     final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
     builder.addString(message);
     _client.publishMessage(_topic, MqttQos.exactlyOnce, builder.payload);
@@ -116,7 +116,7 @@ class MqttManager {
       print('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       print('');
       LocalNotification.show(title: 'MQTT 메시지 수신', body: pt);
-      await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}\t$pt\n');
+      await _writeDataToFile('${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}<--- $pt\n');
     });
     print('EXAMPLE::OnConnected client callback - Client connection was sucessful');
   }
